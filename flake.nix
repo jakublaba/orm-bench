@@ -15,13 +15,6 @@
         default = pkgs.mkShell {
           packages = [
             pkgs.postgresql
-            pkgs.openjdk21
-            pkgs.gradle
-            pkgs.rustc
-            pkgs.cargo
-            pkgs.hyperfine
-            pkgs.perf
-            pkgs.jq
             pkgs.gzip
           ];
 
