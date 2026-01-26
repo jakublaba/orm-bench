@@ -1,10 +1,4 @@
--- ==================================================
--- IMDb Data Load Script (robust, client-side \copy, gzip)
--- ==================================================
-
--- ==================================================
--- 1. title.akas
--- ==================================================
+-- title_akas
 CREATE TEMP TABLE title_akas_raw (
     title_id TEXT,
     ordering TEXT,
@@ -16,8 +10,7 @@ CREATE TEMP TABLE title_akas_raw (
     is_original_title TEXT
 );
 
-\copy title_akas_raw FROM PROGRAM 'gunzip -c data/imdb/title.akas.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy title_akas_raw FROM PROGRAM 'gzip -dc data/imdb/title.akas.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO title_akas
 SELECT
@@ -33,9 +26,7 @@ FROM title_akas_raw;
 
 DROP TABLE title_akas_raw;
 
--- ==================================================
--- 2. title.basics
--- ==================================================
+-- title_basics
 CREATE TEMP TABLE title_basics_raw (
     tconst TEXT,
     title_type TEXT,
@@ -48,8 +39,7 @@ CREATE TEMP TABLE title_basics_raw (
     genres TEXT
 );
 
-\copy title_basics_raw FROM PROGRAM 'gunzip -c data/imdb/title.basics.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy title_basics_raw FROM PROGRAM 'gzip -dc data/imdb/title.basics.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO title_basics
 SELECT
@@ -66,17 +56,14 @@ FROM title_basics_raw;
 
 DROP TABLE title_basics_raw;
 
--- ==================================================
--- 3. title.crew
--- ==================================================
+-- title_crew
 CREATE TEMP TABLE title_crew_raw (
     tconst TEXT,
     directors TEXT,
     writers TEXT
 );
 
-\copy title_crew_raw FROM PROGRAM 'gunzip -c data/imdb/title.crew.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy title_crew_raw FROM PROGRAM 'gzip -dc data/imdb/title.crew.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO title_crew
 SELECT
@@ -87,9 +74,7 @@ FROM title_crew_raw;
 
 DROP TABLE title_crew_raw;
 
--- ==================================================
--- 4. title.episode
--- ==================================================
+-- title_episode
 CREATE TEMP TABLE title_episode_raw (
     tconst TEXT,
     parent_tconst TEXT,
@@ -97,8 +82,7 @@ CREATE TEMP TABLE title_episode_raw (
     episode_number TEXT
 );
 
-\copy title_episode_raw FROM PROGRAM 'gunzip -c data/imdb/title.episode.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy title_episode_raw FROM PROGRAM 'gzip -dc data/imdb/title.episode.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO title_episode
 SELECT
@@ -110,9 +94,7 @@ FROM title_episode_raw;
 
 DROP TABLE title_episode_raw;
 
--- ==================================================
--- 5. title.principals
--- ==================================================
+-- title_principals
 CREATE TEMP TABLE title_principals_raw (
     tconst TEXT,
     ordering TEXT,
@@ -122,8 +104,7 @@ CREATE TEMP TABLE title_principals_raw (
     characters TEXT
 );
 
-\copy title_principals_raw FROM PROGRAM 'gunzip -c data/imdb/title.principals.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy title_principals_raw FROM PROGRAM 'gzip -dc data/imdb/title.principals.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO title_principals
 SELECT
@@ -137,17 +118,14 @@ FROM title_principals_raw;
 
 DROP TABLE title_principals_raw;
 
--- ==================================================
--- 6. title.ratings
--- ==================================================
+-- title_ratings
 CREATE TEMP TABLE title_ratings_raw (
     tconst TEXT,
     average_rating TEXT,
     num_votes TEXT
 );
 
-\copy title_ratings_raw FROM PROGRAM 'gunzip -c data/imdb/title.ratings.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy title_ratings_raw FROM PROGRAM 'gzip -dc data/imdb/title.ratings.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO title_ratings
 SELECT
@@ -158,9 +136,7 @@ FROM title_ratings_raw;
 
 DROP TABLE title_ratings_raw;
 
--- ==================================================
--- 7. name.basics
--- ==================================================
+-- name_basics
 CREATE TEMP TABLE name_basics_raw (
     nconst TEXT,
     primary_name TEXT,
@@ -170,8 +146,7 @@ CREATE TEMP TABLE name_basics_raw (
     known_for_titles TEXT
 );
 
-\copy name_basics_raw FROM PROGRAM 'gunzip -c data/imdb/name.basics.tsv.gz'
-WITH (FORMAT csv, DELIMITER E'\t', QUOTE E'\b', HEADER true, NULL '\N');
+\copy name_basics_raw FROM PROGRAM 'gzip -dc data/imdb/name.basics.tsv.gz' WITH (FORMAT CSV, DELIMITER E'\t', NULL '\N', QUOTE E'\b', HEADER);
 
 INSERT INTO name_basics
 SELECT
@@ -184,7 +159,3 @@ SELECT
 FROM name_basics_raw;
 
 DROP TABLE name_basics_raw;
-
--- ==================================================
--- Done
--- ==================================================
