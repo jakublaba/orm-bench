@@ -1,4 +1,9 @@
-data
+# ignore data
+data/**
+# except download scripts
+!data/**/*.sh
+
+# postgres metadata
 pgdata
 pgsocket
 pg.log
