@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 DB_NAME="${PGDATABASE:?PGDATABASE not set}"
 PGPORT="${PGPORT:?PGPORT not set}"
 PGDATA="${PGDATA:?PGDATA not set}"
@@ -11,9 +13,9 @@ echo "    PGDATA: $PGDATA"
 echo "    PGHOST: $PGHOST"
 echo "    PGPORT: $PGPORT"
 
-# restart postgres
-exec stop-db.sh
-exec start-db.sh
+# restart 
+"$SCRIPT_DIR/stop-db.sh"
+"$SCRIPT_DIR/start-db.sh"
 
 # re-create db
 echo "==> Recreating database"
@@ -22,7 +24,7 @@ createdb "$DB_NAME"
 
 # apply schema
 echo "==> Applying schema"
-psql "$DB_NAME" -f postgres/schema.sql
+psql "$DB_NAME" -f "$SCRIPT_DIR/../postgres/schema.sql"
 
 # load data
-psql "$DB_NAME" -f postgres/load.sql
+psql "$DB_NAME" -f "$SCRIPT_DIR/../postgres/load.sql"
