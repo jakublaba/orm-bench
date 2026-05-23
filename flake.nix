@@ -22,7 +22,8 @@
             export PGDATA=$PWD/pgdata
             export PGHOST="/tmp/pgsocket-$USER-orm-bench"
             export PGPORT=5433
-            export PGDATABASE=bench
+            export PGDATABASE=default
+            export PGUSER=$(whoami)
             export JDBC_URL="jdbc:postgresql://localhost:5433/bench"
 
             # initialize pgdata

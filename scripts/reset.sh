@@ -14,8 +14,8 @@ echo "    PGHOST: $PGHOST"
 echo "    PGPORT: $PGPORT"
 
 # restart 
-"$SCRIPT_DIR/stop-db.sh"
-"$SCRIPT_DIR/start-db.sh"
+"$SCRIPT_DIR/stop.sh"
+"$SCRIPT_DIR/start.sh"
 
 # re-create db
 echo "==> Recreating database"

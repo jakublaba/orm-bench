@@ -10,11 +10,20 @@ echo "    PGDATA: $PGDATA"
 echo "    PORT:   $PGPORT"
 echo "    SOCKET: $PGHOST"
 
+# initialize pgdata if it doesn't exist
+if [ ! -f "$PGDATA/PG_VERSION" ]; then
+  echo "==> Initializing new Postgres cluster"
+  initdb -D "$PGDATA"
+fi
+
 # skip if already running
 if pg_ctl -D "$PGDATA" status > /dev/null 2>&1; then
   echo "==> Postgres already running"
   exit 0
 fi
+
+# ensure socket dir exists
+mkdir -p "$PGHOST"
 
 # start
 pg_ctl -D "$PGDATA" \
